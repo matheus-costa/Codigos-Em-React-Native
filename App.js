@@ -1,13 +1,68 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Button, StyleSheet, TextInput, View } from "react-native";
 
 export default function App() {
+  const [valor1, setValor1] = useState("");
+  const [valor2, setValor2] = useState("");
+  let resultado = 0;
+
+  const soma = () => {
+    resultado = parseFloat(valor1) + parseFloat(valor2);
+    alert(`O resultado é ${resultado}`);
+  };
+
+  const subtrai = () => {
+    resultado = parseFloat(valor1) - parseFloat(valor2);
+    alert(`O resultado é ${resultado}`);
+  };
+
+  const multiplica = () => {
+    resultado = parseFloat(valor1) * parseFloat(valor2);
+    alert(`O resultado é ${resultado}`);
+  };
+
+  const divide = () => {
+    resultado = parseFloat(valor1) / parseFloat(valor2);
+    alert(`O resultado é ${resultado}`);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.textoGrande}>
-        Inter vai ganhar o bolivar de novo!
-      </Text>
-      <Text style={[styles.textoCor, styles.textoGrande]}>Matheus!</Text>
+      <TextInput
+        style={styles.inputs}
+        keyboardType="numeric"
+        placeholder="Digite o valor 1"
+        onChangeText={(val1) => setValor1(val1)}
+        value={valor1}
+      ></TextInput>
+
+      <TextInput
+        style={styles.inputs}
+        keyboardType="numeric"
+        placeholder="Digite o valor 2"
+        onChangeText={(val2) => setValor2(val2)}
+        value={valor2}
+      ></TextInput>
+
+      <View style={styles.botoes}>
+        <Button title="Somar" onPress={soma}>
+          Somar
+        </Button>
+
+        <Button title="Subtrair" onPress={subtrai}>
+          Subtrair
+        </Button>
+
+        <Button title="Multiplicar" onPress={multiplica}>
+          Multiplicar
+        </Button>
+
+        <Button title="Dividir" onPress={divide}>
+          Dividir
+        </Button>
+      </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -20,17 +75,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  textoGrande: {
-    fontSize: 20,
+  inputs: {
+    marginBottom: "5%",
   },
-  meuNome: {
-    fontSize: 20,
-    flex: 2,
-    color: "#E10832",
-    alignItems: "auto",
-    justifyContent: "auto",
-  },
-  textoCor: {
-    color: "green",
+  botoes: {
+    flex: 1,
+    gap: 10,
+    alignItems: "center",
+    maxHeight: "50%",
+    width: "100%",
   },
 });
