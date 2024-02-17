@@ -1,73 +1,48 @@
-import React from "react";
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from "react-native";
+import React, { useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, Button } from "react-native";
+import DateTimePicker from "react-native-modal-datetime-picker";
 
-const DATA = [
-  {
-    id: "1",
-    title: "First Item",
-    nome: "Diego",
-    idade: "40",
-  },
-  {
-    id: "2",
-    title: "Second Item",
-    nome: "Jenifer",
-    idade: "21",
-  },
-  {
-    id: "3",
-    title: "Third Item",
-    nome: "Endrio",
-    idade: "22",
-  },
-  {
-    id: "4",
-    title: "For Item",
-    nome: "Jonas",
-    idade: "20",
-  },
-];
+const Exemplo = () => {
+  //quando eu abro a aplicação não aparece o calendário, ele só se ativa após o clique do botão
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-const App = () => {
-  const renderItem = ({ item }) => (
-    <View style={meuestilo.item}>
-      <Text style={meuestilo.id}>{item.id}</Text>
-      <Text style={meuestilo.title}>{item.title}</Text>
-      <Text style={[meuestilo.title, meuestilo.cor]}>{item.nome}</Text>
-      <Text style={[meuestilo.title, meuestilo.cor]}>{item.idade}</Text>
-    </View>
-  );
+  const showDatePicker = () => {
+    // aqui ele mostra a data
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    // quando eu selecionar a data vai esconder o resto e "guardar" a data
+    setDatePickerVisibility(false);
+  };
+  const handleConfirm = (date) => {
+    console.warn("A Data é: ", date.toLocaleString());
+    hideDatePicker();
+  };
 
   return (
-    <SafeAreaView style={meuestilo.container}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        // item é o banco de dados segmentado por id
-        keyExtractor={(item) => item.id}
+    <View style={styles.container}>
+      <Button title="selecionar data" onPress={showDatePicker} />
+      <DateTimePicker
+        isVisible={isDatePickerVisible}
+        mode="datetime" //posso alterar entre data e hora
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        //cancelTextIOS="Da-lhe" // no android posso personalizar
+        //confirmTextIOS="botele"
       />
-    </SafeAreaView>
+    </View>
   );
 };
+export default Exemplo;
 
-const meuestilo = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-    color: "yellow",
-  },
-  cor: {
-    color: "green",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 30,
   },
 });
-
-export default App;
